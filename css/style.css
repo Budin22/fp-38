@@ -1,0 +1,21 @@
+.taskWrapper {
+    background-color: rgba(229, 220, 220, 0.24);
+    border-radius: 10px;
+    box-shadow: 0 0 10px 1px #49807e;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.taskHeading {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #733373;
+}
+
+.taskDescription {
+    font-size: 14px;
+    font-weight: bold;
+    color: #733373;
+}
