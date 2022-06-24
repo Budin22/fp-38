@@ -44,7 +44,7 @@ function controller(view, model, outPut) {
     }
 
     const contentLoadedHandler = () => {
-        // if(model.getData()) model.getData().forEach((item) => view.addToDoItem(item));  @todo add iterator
+        // if(model.getData()) model.getData().forEach((item) => view.addToDoItem(item)); // @todo add iterator
         if(model.getData()) iteratorSetData(model.getData()[Symbol.iterator]());
 
     }

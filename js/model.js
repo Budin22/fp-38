@@ -4,7 +4,7 @@ const model = () => {
     return {
         form: null,
         id: null,
-        selectValue: null,
+        selectValue: "no-status",
 
         init (formName) {
             this.form = formName;
@@ -34,7 +34,7 @@ const model = () => {
             if(savedData) this.id += 1;
 
             toDoItemData.id = this.id;
-            // toDoItemData.select = this.selectValue;
+            toDoItemData.select = this.selectValue;
 
             localStorageDataContainer.push(toDoItemData);
             localStorage.setItem(this.form, JSON.stringify(localStorageDataContainer));
