@@ -6,29 +6,29 @@ const model = () => {
         id: null,
         selectValue: "no-status",
 
-        init (formName) {
+        set initForm (formName) {
             this.form = formName;
-            const savedData = this.getData();
-            this.id = savedData ? savedData[savedData.length-1].id + 1 : 1;
+            const savedData = this.getData;
+            this.id = savedData ? savedData[savedData.length-1].id : 1;
         },
 
-        getData() {
+        get getData() {
             return JSON.parse(localStorage.getItem(this.form));
         },
 
-        setSelect(idSelectItem, selectValue) {
-            const data = this.getData();
+        set setSelect({id, selectValue}) {
+            const data = this.getData;
             data.forEach((item) => {
-                if(item.id === idSelectItem) {
+                if(item.id === id) {
                     item.select = selectValue;
                 }
             });
             localStorage.setItem(this.form, JSON.stringify(data));
         },
 
-        setData(data) {
+        set setData(data) {
             const  toDoItemData = structuredClone(data);
-            const savedData = this.getData();
+            const savedData = this.getData;
             const localStorageDataContainer = savedData ? savedData : [];
 
             if(savedData) this.id += 1;
@@ -39,10 +39,11 @@ const model = () => {
             localStorageDataContainer.push(toDoItemData);
             localStorage.setItem(this.form, JSON.stringify(localStorageDataContainer));
 
-            return toDoItemData;
+            this.toDoItemData = toDoItemData;
         },
-        removeToDoItem(idRemoveItem) {
-            const data = this.getData().filter((item) => item.id !== idRemoveItem);
+
+        set removeToDoItem(idRemoveItem) {
+            const data = this.getData.filter((item) => item.id !== idRemoveItem);
             if(data.length !== 0) localStorage.setItem(this.form, JSON.stringify(data));
             else localStorage.clear();
         },

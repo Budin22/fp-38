@@ -8,8 +8,8 @@ function controller(view, model, outPut) {
     const form = document.getElementById(formSelector);
     const container = document.getElementById(containerSelector);
 
-    model.init(formSelector);
-    view.init(form, container);
+    model.initForm = formSelector;
+    view.initContainer = container;
 
     const getDataForm = (inputsCollection) => {
         if(inputsCollection instanceof NodeList) inputsCollection = Array.from(inputsCollection);
@@ -33,20 +33,20 @@ function controller(view, model, outPut) {
         const data = getDataForm(inputs);
 
         if(!data) return alert("Нужно заполнить поля!");
+        model.setData = data;
 
-        view.addToDoItem(model.setData(data));
+        view.addToDoItem = model.toDoItemData;
+        view.resetForm = form;
     }
 
     const iteratorSetData = (iterator) => {
        for(let key of iterator) {
-           view.addToDoItem(key)
+           view.addToDoItem = key;
        }
     }
 
     const contentLoadedHandler = () => {
-        // if(model.getData()) model.getData().forEach((item) => view.addToDoItem(item)); // @todo add iterator
-        if(model.getData()) iteratorSetData(model.getData()[Symbol.iterator]());
-
+        if(model.getData) iteratorSetData(model.getData[Symbol.iterator]());
     }
 
     const selectHandler = (event) => {
@@ -55,7 +55,7 @@ function controller(view, model, outPut) {
             const selectValue = event.target.value;
             const id = +event.target.getAttribute('data-select-id');
 
-            model.setSelect(id, selectValue);
+            model.setSelect = {id, selectValue};
         }
     }
 
@@ -64,19 +64,16 @@ function controller(view, model, outPut) {
         event.stopPropagation();
         if(event.target instanceof HTMLButtonElement) {
             const toDoItem = event.target.parentElement.parentElement;
-            const id = +toDoItem.getAttribute('data-todo-id');
 
-            model.removeToDoItem(id);
-            view.removeToDoItem(toDoItem);
-            if(localStorage.length < 1) view.resetForm(form);
+            model.removeToDoItem = +toDoItem.getAttribute('data-todo-id');
+            view.removeToDoItem = toDoItem;
+            if(localStorage.length < 1) view.resetForm = form;
         }
     }
 
     form.addEventListener('submit', submitHandler);
     window.addEventListener('DOMContentLoaded', contentLoadedHandler);
     container.addEventListener('click', removeToDoItem);
-    container.addEventListener('click', selectHandler);
+    container.addEventListener('change', selectHandler);
 
-    return {
-    }
 }

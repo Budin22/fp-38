@@ -2,10 +2,9 @@
 
 const view = () => {
     return {
-        form: null,
         toDoContainer: null,
 
-        createToDoItem(data) {
+        set createToDoItem(data) {
             const div = document.createElement('div');
             div.classList.add('col-4');
             div.setAttribute( `data-todo-id`, `${data.id}`)
@@ -13,31 +12,31 @@ const view = () => {
             div.innerHTML = `<div class="taskWrapper">
                 <button type="button" class="btn-close mb-2" aria-label="Close"></button>
                 <select class="form-select mb-2" data-select-id=${data.id}>
-                    <option value="no-status" ${data?.select === "no-status" ? "selected='true'" : ""}>Без статуса</option>
-                    <option value="pending" ${data?.select === "pending" ? "selected='true'" : ""}>В работе</option>
-                    <option value="сompleted" ${data?.select === "сompleted" ? "selected='true'" : ""}>Завершен</option>
+                    <option value="no-status" ${data?.select === "no-status" ? "selected" : ""}>Без статуса</option>
+                    <option value="pending" ${data?.select === "pending" ? "selected" : ""}>В работе</option>
+                    <option value="сompleted" ${data?.select === "сompleted" ? "selected" : ""}>Завершен</option>
                 </select>
                 <div class="taskHeading">${data.title}</div>
                 <div class="taskDescription">${data.description}</div>
             </div>`;
 
-            return div;
+            this.div = div;
         },
 
-        removeToDoItem(item) {
+        set removeToDoItem(item) {
             item.remove();
         },
 
-        resetForm(formElement) {
+        set resetForm(formElement) {
             formElement.reset();
         },
 
-        addToDoItem(dataInput) {
-            this.toDoContainer.append(this.createToDoItem(dataInput));
+        set addToDoItem(dataInput) {
+            this.createToDoItem = dataInput;
+            this.toDoContainer.append(this.div);
         },
 
-        init(formElement, containerElement) {
-            this.form = formElement;
+        set initContainer(containerElement) {
             this.toDoContainer = containerElement;
         },
     }
